@@ -21,7 +21,7 @@ import {
 import { Link as ReactLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { CgProfile } from 'react-icons/cg';
-import { MdLocalShipping, MdLogout } from 'react-icons/md';
+import { MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import { GiTechnoHeart } from 'react-icons/gi';
 import { useState } from 'react';
@@ -45,7 +45,6 @@ const ShoppingCartIcon = () => {
 const links = [
   { linkName: 'Products', path: '/products' },
   { linkName: <ShoppingCartIcon />, path: '/cart' },
-
 ];
 const NavLink = ({ path, children }) => (
   <Link
@@ -54,7 +53,8 @@ const NavLink = ({ path, children }) => (
     px={2}
     py={2}
     rounded='md'
-    _hover={{ textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700') }}>
+    _hover={{ textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700') }}
+  >
     {children}
   </Link>
 );
@@ -87,7 +87,8 @@ const Navbar = () => {
             to='/'
             style={{ textDecoration: 'none' }}
             onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}>
+            onMouseLeave={() => setIsHovering(false)}
+          >
             <Flex alignItems='center'>
               <Icon as={GiTechnoHeart} h={6} w={6} color={isHovering ? 'cyan.400' : 'orange.400'} />
               <Text fontWeight='extrabold'>Tech Store</Text>
@@ -102,7 +103,7 @@ const Navbar = () => {
           </HStack>
         </HStack>
         <Flex alignItems='center'>
-           <Icon
+          <Icon
             cursor='pointer'
             mr='3'
             as={colorMode === 'light' ? MoonIcon : SunIcon}
@@ -124,6 +125,15 @@ const Navbar = () => {
                   <MdLocalShipping />
                   <Text ml='2'>Your Orders</Text>
                 </MenuItem>
+                {userInfo.isAdmin === 'true' && (
+                  <>
+                    <MenuDivider />
+                    <MenuItem as={ReactLink} to={'/admin-console'}>
+                      <MdOutlineAdminPanelSettings />
+                      <Text ml='2'>Admin Console</Text>
+                    </MenuItem>
+                  </>
+                )}
                 <MenuDivider />
                 <MenuItem onClick={logoutHandler}>
                   <MdLogout />
@@ -145,7 +155,8 @@ const Navbar = () => {
                 fontWeight={600}
                 _hover={{ bg: 'orange.400' }}
                 bg='orange.500'
-                color='white'>
+                color='white'
+              >
                 Sign Up
               </Button>{' '}
             </>
