@@ -22,18 +22,17 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(userLogin(data));
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
-    const message =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : error.message;
     dispatch(
       setError(
-        message ? message : 'An unexpected error has occured. Please try again later.'
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
       )
     );
   }
 };
-
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
